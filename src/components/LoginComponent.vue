@@ -35,13 +35,17 @@ export default defineComponent({
     },
     methods: {
         login(){
-            fetch('http://localhost:8000/login',{
+            console.log(this.user.email)
+            fetch('http://10.177.200.14:8000/login',{
                 method: 'POST',
                 headers:{
                     'Content-Type': 'application/json'
                 
                 },
-                body: JSON.stringify(this.user)
+                body: JSON.stringify({
+                    username: this.user.email,
+                    password: this.user.password
+                })
             }).then(response =>{
                 if(response.status === 200){
                     response.json().then(data => {
