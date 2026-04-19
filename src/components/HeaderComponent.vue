@@ -1,43 +1,53 @@
 <template>
     <div class="navbar">
         <h1>Reseptikirja</h1>
-        <a class="link" href="/reseptit">Reseptit</a>
-        <a class="link" href="/profiili" v-if="isLoggedIn">Profiili</a>
-        <a class="link" href="/kirjaudu" v-if="!isLoggedIn">Kirjaudu sisään</a>
-        <a class="link" href="/rekisteroidy" v-if="!isLoggedIn">Rekisteröidy</a>
+
+        <RouterLink class="link" to="/reseptit">Reseptit</RouterLink>
+        <RouterLink class="link" to="/profiili" v-if="isLoggedIn">Profiili</RouterLink>
+        <RouterLink class="link" to="/kirjaudu" v-if="!isLoggedIn">Kirjaudu sisään</RouterLink>
+        <RouterLink class="link" to="/rekisteroidy" v-if="!isLoggedIn">Rekisteröidy</RouterLink>
         <button class="button" @click="logout" v-if="isLoggedIn">Kirjaudu ulos</button>
     </div>
 </template>
 
 <script lang="js">
-import { defineComponent } from 'vue';
-import {useRouter} from 'vue-router';
-export default defineComponent ({
-    name:"HeaderComponent",
-    setup(){
-        const router = new useRouter();
+import { defineComponent, ref, watch, onMounted, onBeforeUnmount } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+
+export default defineComponent({
+    name: "HeaderComponent",
+    setup() {
+        const router = useRouter();
+        const route = useRoute();
+        const isLoggedIn = ref(false);
+
+        const syncLoginStatus = () => {
+            isLoggedIn.value = !!localStorage.getItem('token');
+        };
+
+        const logout = () => {
+            localStorage.removeItem('token');
+            syncLoginStatus();
+            router.push('/');
+        };
+
+        onMounted(() => {
+            syncLoginStatus();
+            window.addEventListener('storage', syncLoginStatus);
+        });
+
+        onBeforeUnmount(() => {
+            window.removeEventListener('storage', syncLoginStatus);
+        });
+
+        watch(() => route.fullPath, syncLoginStatus);
 
         return {
-            router
-        }
-    },
-    methods:{
-        isLoggedIn(){
-            if(localStorage.getItem('token')){
-                return true;
-            }
-            else {
-                return false;
-            }
-        },
-        logout(){
-            localStorage.removeItem('token');
-            this.router.push('/')
-        }
-
+            isLoggedIn,
+            logout
+        };
     }
-})
-
+});
 </script>
 
 <style scoped>
@@ -55,7 +65,4 @@ export default defineComponent ({
 .button{
     height: 50px;
 }
-
-
-
 </style>

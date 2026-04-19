@@ -36,21 +36,19 @@ export default defineComponent({
     methods: {
         login(){
             console.log(this.user.email)
-            fetch('http://10.177.200.14:8000/login',{
+            fetch('http://localhost:8000/login',{
                 method: 'POST',
                 headers:{
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/x-www-form-urlencoded'
                 
                 },
-                body: JSON.stringify({
-                    username: this.user.email,
-                    password: this.user.password
+                body: `username=${encodeURIComponent(this.user.email)}&password=${encodeURIComponent(this.user.password)}`
                 })
-            }).then(response =>{
+            .then(response =>{
                 if(response.status === 200){
                     response.json().then(data => {
                         localStorage.setItem('token', data.token);
-                        this.router.push('/recipes');
+                        this.router.push('/reseptit');
                     }) 
                 }
                 else
