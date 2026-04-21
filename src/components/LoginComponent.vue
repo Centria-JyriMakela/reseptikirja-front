@@ -47,7 +47,7 @@ export default defineComponent({
             .then(response =>{
                 if(response.status === 200){
                     response.json().then(data => {
-                        localStorage.setItem('token', data.token);
+                        localStorage.setItem('token', data.access_token);
                         this.router.push('/reseptit');
                     }) 
                 }

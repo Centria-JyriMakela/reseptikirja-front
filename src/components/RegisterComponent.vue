@@ -46,7 +46,7 @@ export default defineComponent({
                 body: JSON.stringify(this.user)
             }).then(response => {
                 if(response.status === 200){
-                    this.router.push('/login');
+                    this.router.push('/kirjaudu');
                 }
                 else{
                     alert('Rekisteröityminen epäonnistui');
