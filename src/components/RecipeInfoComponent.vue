@@ -1,5 +1,10 @@
 <template>
-
+    <div>
+        <h2>{{ recipe.name }}</h2>
+        <p><strong>Ainesosat:</strong>{{ recipe.ingredients }}</p>
+        <p><strong>Valmistusohje:</strong>{{ recipe.instructions }}</p>
+        <p><strong>Valmistusaika:</strong>{{ recipe.time }}</p>
+    </div>
 </template>
 
 <script lang="js">

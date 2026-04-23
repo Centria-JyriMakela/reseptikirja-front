@@ -3,7 +3,7 @@
         <h2>Reseptit</h2>
         <ul>
             <li v-for="recipe in recipes" :key="recipe.id">
-                <a href="/resepti/{{  recipe.id }}">{{ recipe.name}}</a>
+                <a :href="`/resepti/${recipe.id}`">{{ recipe.name}}</a>
             </li>
         </ul>
     </div>
