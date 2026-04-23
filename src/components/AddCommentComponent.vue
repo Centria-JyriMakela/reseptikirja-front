@@ -30,7 +30,7 @@ export default defineComponent({
             const token = localStorage.getItem("token");
             const tokenData = JSON.parse(atob(token.split('.')[1]));
             const userId = tokenData.user_id;
-            fetch(`http://localhost:8000/comments/${this.recipeId}`,{
+            fetch(`http://localhost:8000/comment/${this.recipeId}`,{
                 method: 'POST',
                 headers:{
                     'Content-Type': 'application/json',
