@@ -11,10 +11,12 @@
 
 <script lang="js">
 import {defineComponent} from 'vue';
+import { useRoute } from 'vue-router';
 export default defineComponent({
     name:'CommentComponent',
     setup(){
-        const id = this.$route.params.id;
+        const route = useRoute();
+        const id = route.params.id;
         return {
             id
         }

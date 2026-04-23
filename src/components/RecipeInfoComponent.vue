@@ -9,10 +9,12 @@
 
 <script lang="js">
 import {defineComponent} from 'vue';
+import { useRoute } from 'vue-router';
 export default defineComponent({
     name:'RecipeInfoComponent',
     setup(){
-        const recipeId =this.$route.params.id;
+        const route = useRoute();
+        const recipeId = route.params.id;
 
         return {
             recipeId
@@ -45,6 +47,9 @@ export default defineComponent({
 
 
     }
+},
+mounted(){
+    this.getRecipe();
 }
 
 })
